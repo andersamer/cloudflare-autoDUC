@@ -1,0 +1,10 @@
+{
+    "AuthKey": "",
+    "ZoneID": "",
+    "Record":{
+        "id": "",
+        "domain": ""
+    },
+    "PublicAddressAPI": "https://ifconfig.me",
+    "ListRecords": false
+}
