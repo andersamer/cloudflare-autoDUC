@@ -4,7 +4,7 @@ A simple script that acts as an **automatic DNS Update Client** for Cloudflare D
 
 ## Installation
 
-To install, simply run the `install.sh` script. By default, the script and its configuration file will be copied to `~/.local/bin/cloudflare-autoDUC`. You can change the installation directory by editing the `DEST` variable in `install.sh`. Make sure to properly configure the script using the [`conf.json`](https://github.com/andersamer/cloudflare-autoDUC/blob/main/conf.json) file after installing.
+To install, simply run the `install.sh` script. By default, the script and its configuration file will be copied to `~/.local/bin/cloudflare-autoDUC`. You can change the installation directory by editing the `DEST` variable in `install.sh`. Make sure to properly configure the script using the `conf.json` file after installing.
 
 ```json
 {
