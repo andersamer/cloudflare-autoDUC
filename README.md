@@ -4,10 +4,27 @@ A simple script that acts as an **automatic DNS Update Client** for Cloudflare D
 
 ## Installation
 
-To install, simply run the `install.sh` script. `autoDUC.py` will be copied to `~/.local/bin/cloudflare-autoDUC`, and the installer will create a file called `.env` file in that directory. Make sure you define the following variables in your `.env`:
+To install, simply run the `install.sh` script. By default, the script and its configuration file will be copied to `~/.local/bin/cloudflare-autoDUC`. You can change the installation directory by editing the `DEST` variable in `install.sh`. Make sure to properly configure the script using [the `conf.json` file](https://github.com/andersamer/cloudflare-autoDUC/blob/main/conf.json) after installing.
 
-* `CLOUDFLARE_API_KEY` - Your Cloudflare API key.
-* `CLOUDFLARE_ZONE_ID` - The zone ID of the DNS record.
-* `TARGET_DNS_RECORD_ID` - The ID of the DNS record you want to change. You can see all of your DNS record ID's by listing all of the records for a particular zone. (I made a function for this called `getRecords()` to make this part easier. Uncomment the line in the script and run it manually to see all of your records).
-* `PUBLIC_IP_API_URL` - The URL of the site you want to query to get your current public IP. [ifconfig.me](https://ifconfig.me) has always been a good option.
-* `TARGET_DNS_RECORD_NAME` - The name of the DNS record you want to change.
+```json
+{
+    "AuthKey": "",   // Your Cloudflare API key
+    "ZoneID": "",    // The Zone ID of the record you wish to update
+    "Record":{
+        "id": "",    // The ID of the record you wish to update
+        "domain": "" // The domain of the reocrd you wish to update
+    },
+    "PublicAddressAPI": "https://ifconfig.me", // A URL for an API that you can 
+                                               // use to check your current 
+                                               // public IP
+    "ListRecords": false // Set this to `true` if you want the script to print
+                         // all of the records for a particular zone. (This is 
+                         // especially useful for finding your Record ID)
+}
+```
+
+If you don't want to use `install.sh`, you can point your own cronjob at the script yourself:
+
+```shell
+0 */3 * * * /usr/bin/python /path/to/script/directory/main.py
+```
