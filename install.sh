@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEST="$HOME/.local/bin/" # Edit this variable if you want to change the installation directory
+DEST="$HOME/.local/bin" # Edit this variable if you want to change the installation directory
 INSTALL_DIR="$DEST/cloudflare-autoDUC"
 
 # Function to install dependencies
@@ -27,7 +27,7 @@ install_python_script() {
 # Function to set up cronjob
 setup_cronjob() {
     echo "Setting up cronjob..."
-    (crontab -l ; echo "0 */3 * * * /usr/bin/python3 $INSTALL_DIR/main.py") | crontab -
+    (crontab -l ; echo "*/30 * * * * /usr/bin/python3 $INSTALL_DIR/main.py") | crontab -
 }
 
 # Main function
