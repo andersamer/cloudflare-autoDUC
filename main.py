@@ -49,7 +49,7 @@ def main():
             # sys.exit()
         else:
             # Removing this logging statement because it's noisy
-            logging.info(f"Current IP address has not changed ({current_public_ip}). No update will be attempted.")
+            # logging.info(f"Current IP address has not changed ({current_public_ip}). No update will be attempted.")
             pass
 
     sys.exit()
