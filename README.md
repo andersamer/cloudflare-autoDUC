@@ -10,10 +10,16 @@ To install, simply run the `install.sh` script. By default, the script and its c
 {
     "AuthKey": "",
     "ZoneID": "",
-    "Record":{
-        "id": "",
-        "domain": ""
-    },
+    "Records": [
+        {
+            "id": "",
+            "name": ""
+        },
+        {
+            "id": "",
+            "name": ""
+        }
+    ],
     "PublicAddressAPI": "https://ifconfig.me",
     "ListRecords": false
 }

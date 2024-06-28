@@ -3,11 +3,11 @@ import requests
 import logging
 
 class AutoDUC:
-    def __init__(self, api_key, zone_id, record_id, record_domain, public_api):
+    def __init__(self, api_key, zone_id, record_id, record_name, public_api):
         self.api_key = api_key
         self.zone_id = zone_id
         self.record_id = record_id
-        self.record_domain = record_domain
+        self.record_name = record_name
         self.public_api = public_api
 
     def requestHeader(self):
@@ -43,7 +43,7 @@ class AutoDUC:
         for record in records["result"]:
             if(record["id"] == self.record_id):
                 return record["content"]
-        logging.error(f"DNS record \"{self.record_domain}\"({self.record_id}) not found in zone \"{self.zone_id}\".")
+        logging.error(f"DNS record \"{self.record_name}\"({self.record_id}) not found in zone \"{self.zone_id}\".")
         sys.exit()
     
     def updateRecord(self, new_ip):
@@ -51,7 +51,7 @@ class AutoDUC:
         
         payload = {
             "content": new_ip,
-            "name": self.record_domain,
+            "name": self.record_name,
             "proxied": False,
             "type": "A",
             "comment": "",
@@ -62,9 +62,9 @@ class AutoDUC:
             response = requests.put(url, json=payload, headers=self.requestHeader())
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
-            logging.error(f"Failed to update DNS record \"{self.record_domain}\"({self.record_id}): {repr(e)}")
+            logging.error(f"Failed to update DNS record \"{self.record_name}\"({self.record_id}): {repr(e)}")
             raise SystemExit(e)
 
-        logging.info(f"DNS record \"{self.record_domain}\"({self.record_id}) has been successfully updated to \"{new_ip}\".")
+        logging.info(f"DNS record \"{self.record_name}\"({self.record_id}) has been successfully updated to \"{new_ip}\".")
         return response.text
     

@@ -28,26 +28,31 @@ def main():
 
     initLogging(log_path) # Initialize logging
     Config = getConfig(config_path) # Load the config
-    duc = AutoDUC(Config["AuthKey"], Config["ZoneID"], Config["Record"]["id"], Config["Record"]["domain"], Config["PublicAddressAPI"])
     
-    # Print out all records if specified in config
-    if Config["ListRecords"]:
-        print(duc.getRecords())
-        sys.exit()
-
-    
-    # Check to make sure that the IP has changed before attempting to update
-    current_public_ip = duc.getCurrentPublicIP()
-    current_dns_ip = duc.getRecordIP()
-    if current_public_ip != current_dns_ip:
-        logging.info(f"New public IP address detected ({current_public_ip}) Attempting to update DNS...")
-        duc.updateRecord(current_public_ip)
-        sys.exit()
+    # This is a quick-and-dirty fix for handling multiple DNS records. Will have to come 
+    # up with a more robust solution soon
+    for record in Config["Records"]:
+        duc = AutoDUC(Config["AuthKey"], Config["ZoneID"], record["id"], record["name"], Config["PublicAddressAPI"])
         
-    else:
-        # Removing this logging statement because it's noisy
-        # logging.info(f"Current IP address has not changed ({current_public_ip}). No update will be attempted.")
-        sys.exit()
+        # Print out all records if specified in config
+        if Config["ListRecords"]:
+            print(duc.getRecords())
+            sys.exit()
+
+        # Check to make sure that the IP has changed before attempting to update
+        current_public_ip = duc.getCurrentPublicIP()
+        current_dns_ip = duc.getRecordIP()
+        
+        if current_public_ip != current_dns_ip:
+            logging.info(f"New public IP address detected ({current_public_ip}) Attempting to update DNS...")
+            duc.updateRecord(current_public_ip)
+            # sys.exit()
+        else:
+            # Removing this logging statement because it's noisy
+            logging.info(f"Current IP address has not changed ({current_public_ip}). No update will be attempted.")
+            pass
+
+    sys.exit()
 
 if __name__ == "__main__":
     main()
