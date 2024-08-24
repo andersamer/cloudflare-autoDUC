@@ -43,7 +43,8 @@ class AutoDUC:
         for record in records["result"]:
             if(record["id"] == self.record_id):
                 return record["content"]
-        logging.error(f"DNS record \"{self.record_name}\"({self.record_id}) not found in zone \"{self.zone_id}\".")
+        # logging.error(f"DNS record \"{self.record_name}\"({self.record_id}) not found in zone \"{self.zone_id}\".")
+        logging.error(f"DNS record \"{self.record_name}\" not found in zone \"{self.zone_id}\".") # Redacted id
         sys.exit()
     
     def updateRecord(self, new_ip):
@@ -62,9 +63,11 @@ class AutoDUC:
             response = requests.put(url, json=payload, headers=self.requestHeader())
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
-            logging.error(f"Failed to update DNS record \"{self.record_name}\"({self.record_id}): {repr(e)}")
+            # logging.error(f"Failed to update DNS record \"{self.record_name}\"({self.record_id}): {repr(e)}")
+            logging.error(f"Failed to update DNS record \"{self.record_name}\": {repr(e)}") # Redacted id
             raise SystemExit(e)
 
-        logging.info(f"DNS record \"{self.record_name}\"({self.record_id}) has been successfully updated to \"{new_ip}\".")
+        # logging.info(f"DNS record \"{self.record_name}\"({self.record_id}) has been successfully updated to \"{new_ip}\".")
+        logging.info(f"DNS record \"{self.record_name}\" has been successfully updated to \"{new_ip}\".") # Redacted id
         return response.text
     
