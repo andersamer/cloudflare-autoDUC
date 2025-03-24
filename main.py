@@ -1,4 +1,4 @@
-#!venv/bin/python3
+#!venv/bin/python
 
 import requests, logging, sys, os
 from dotenv import dotenv_values
