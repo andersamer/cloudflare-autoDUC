@@ -67,7 +67,7 @@ def make_api_request(method: str, url: str, headers: dict=None, payload: dict=No
     """
     try:
         response = requests.request(method, url, headers=headers, json=payload)
-        response.raise_for_status()
+        response.raise_for_status() # Raise an exception if the status code is 4xx or 5xx
         try:
             return response.json()
         except requests.exceptions.JSONDecodeError:
@@ -99,7 +99,7 @@ def get_zone_records(zone_id: str):
     logger.info(f'Retrieving all DNS records for zone "{zone_id}"...')
     try:
         data = make_api_request('GET', url, headers=cloudflare_headers())
-        result = data.get('result')
+        result = data['result']
         filtered_result = [record for record in result if record['type'] in ['A', 'AAAA']]
         logger.info(f'Successfully retrieved {len(filtered_result)} DNS records from zone "{zone_id}".')
         return filtered_result
@@ -144,7 +144,7 @@ def update_record(record: dict, zone_id: str, new_ip: str):
         raise e
     
     
-def update_zone_records(new_ip, zone_records):
+def update_zone_records(new_ip: str, zone_records: dict):
     """Updates all of the DNS record for the target zone, specified by a predefined global variable, `ZONE_ID`."""
     logger.info(f'Updating all zone DNS records to {new_ip}...')
     for record in zone_records:
@@ -154,12 +154,13 @@ def update_zone_records(new_ip, zone_records):
 
 def main():
     current_ip_address = get_public_ip_address(PUBLIC_IP_API)
-    zone_records = get_zone_records(ZONE_ID)
+    zone_records = get_zone_records(ZONE_ID) 
     current_zone_record_ips = [record['content'] for record in zone_records]
     
     new_ip_address = False
     for ip in current_zone_record_ips:
         if ip != current_ip_address:
+            # One of the records has an outdated IP address, quit here and update records
             new_ip_address = True
             break
 
