@@ -29,11 +29,11 @@ venv\Scripts\Activate
 Then, install the required dependencies:
 
 ```bash
-source venv
 pip install --upgrade pip
 pip install -r requirements.txt
-deactivate
 ```
+
+Then, deactivate the virtual environment.
 
 ## Usage
 
