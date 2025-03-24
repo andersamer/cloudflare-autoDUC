@@ -39,7 +39,7 @@ Then, deactivate the virtual environment.
 
 Before running the script, make sure to create a `.env` file in the root of the repository with the following variables:
 
-```bash
+```python
 CLOUDFLARE_API_EMAIL= # The email you use to log in to Cloudflare
 CLOUDFLARE_API_TOKEN= # This can be found under Cloudflare Dashboard > Profile > Profile > API Tokens > Create Token
 CLOUDFLARE_ZONE_ID= # This can be found under Cloudflare Dashboard > Your Domain > API > ZoneID. Remember: all DNS records under this ZoneID will be updated!
