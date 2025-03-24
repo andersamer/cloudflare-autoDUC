@@ -1,34 +1,66 @@
 # Cloudflare AutoDUC
 
-A simple script that acts as an **automatic DNS Update Client** for Cloudflare DNS. It uses the [Cloudflare DNS API](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-update-dns-record) to update a particular DNS record with the IP address of the current machine.
+A simple script that acts as an **automatic DNS Update Client** for Cloudflare DNS. It uses the [Cloudflare DNS API](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-update-dns-record) to update **all `A`/`AAAA` records in a particular Cloudflare DNS Zone** with the IP address of the machine running the script.
 
 ## Installation
 
-To install, simply run the `install.sh` script. By default, the script and its configuration file will be copied to `~/.local/bin/cloudflare-autoDUC`. You can change the installation directory by editing the `DEST` variable in `install.sh`. Make sure to properly configure the script using the `conf.json` file after installing.
+To install, clone the repository and create a virtual environment:
 
-```json
-{
-    "AuthKey": "",
-    "ZoneID": "",
-    "Records": [
-        {
-            "id": "",
-            "name": ""
-        },
-        {
-            "id": "",
-            "name": ""
-        }
-    ],
-    "PublicAddressAPI": "https://ifconfig.me",
-    "ListRecords": false
-}
+```bash
+git clone https://github.com/andersamer/cloudflare-autoDUC
+cd cloudflare-autoDUC
+python3 -m venv venv
 ```
 
-**Hint:** If you're having a hard time finding the record ID for the particular DNS record that you want to update, set `ListRecords` to `true` and run the script manually. If your `ZoneID` and `AuthKey` are set, then the script will print out all of the DNS records for that `ZoneID`. You can use that data to find the ID for the DNS record that you want to update.
+Activate the virtual environment:
 
-If you don't want to use `install.sh`, you can point your own cronjob at the script yourself:
+* macOS/Linux:
 
-```shell
-0 */3 * * * /usr/bin/python /path/to/script/directory/main.py
+```bash
+source venv/bin/activate
 ```
+
+* Windows (Powershell):
+
+```bash
+venv\Scripts\Activate
+```
+
+Then, install the required dependencies:
+
+```bash
+source venv
+pip install --upgrade pip
+pip install -r requirements.txt
+deactivate
+```
+
+## Usage
+
+Before running the script, make sure to create a `.env` file in the root of the repository with the following variables:
+
+```bash
+CLOUDFLARE_API_EMAIL= # The email you use to log in to Cloudflare
+CLOUDFLARE_API_TOKEN= # This can be found under Cloudflare Dashboard > Profile > Profile > API Tokens > Create Token
+CLOUDFLARE_ZONE_ID= # This can be found under Cloudflare Dashboard > Your Domain > API > ZoneID. Remember: all DNS records under this ZoneID will be updated!
+PUBLIC_IP_API=https://ifconfig.me # This works the best here. I haven't tested any other services yet.
+```
+
+To run the script, give execution privileges to `main.py`.
+
+```bash
+chmod +x main.py
+```
+
+From here on, you are free to run the script manually using `./main.py`. If you want to regularly run the DUC, you can do so by pointing a cronjob at `main.py` script (make sure to the path of python executable in the venv directory here):
+
+```bash
+# crontab -e
+* * * * * /path/to/git/repo/venv/python3 /path/to/git/repo/main.py
+```
+
+Script logs will be recorded in `<repository root>/duc.log`.
+
+## Issues & Contributions
+
+Please feel free to open an issue if you run into any problems. If you'd like to see new features, open a pull request!
