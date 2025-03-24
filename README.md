@@ -52,7 +52,7 @@ To run the script, give execution privileges to `main.py`.
 chmod +x main.py
 ```
 
-From here on, you are free to run the script manually using `./main.py`. If you want to regularly run the DUC, you can do so by pointing a cronjob at `main.py` script (make sure to the path of python executable in the venv directory here):
+From here on, you are free to run the script manually using `./main.py`. If you want to automate the DUC, you can do so by pointing a cronjob at `main.py` script (make sure to the path of python executable in the venv directory here):
 
 ```bash
 # crontab -e
