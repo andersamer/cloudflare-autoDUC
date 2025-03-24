@@ -29,7 +29,7 @@ logger.info(f'Loading environment variables.')
 try:
     # Load variables from .env file into a dictionary
     env_path = os.path.join(root_dir, '.env')
-    env_vars = dotenv_values('.env')  # Defaults to `.env` in the current directory
+    env_vars = dotenv_values(env_path)  # Defaults to `.env` in the current directory
     API_EMAIL = env_vars.get("CLOUDFLARE_API_EMAIL")
     API_TOKEN = env_vars.get("CLOUDFLARE_API_TOKEN")
     ZONE_ID = env_vars.get("CLOUDFLARE_ZONE_ID")
