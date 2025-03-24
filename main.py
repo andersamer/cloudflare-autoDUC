@@ -96,12 +96,12 @@ def get_zone_records(zone_id: str):
         list(dict): A list of DNS records. Only A and AAAA records are included.
     """
     url = f"https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records"
-    logger.info(f'Retrieving all DNS records for zone "{zone_id}"...')
+    logger.debug(f'Retrieving all DNS records for zone "{zone_id}"...')
     try:
         data = make_api_request('GET', url, headers=cloudflare_headers())
         result = data['result']
         filtered_result = [record for record in result if record['type'] in ['A', 'AAAA']]
-        logger.info(f'Successfully retrieved {len(filtered_result)} DNS records from zone "{zone_id}".')
+        logger.debug(f'Successfully retrieved {len(filtered_result)} DNS records from zone "{zone_id}".')
         return filtered_result
     except Exception as e:
         logger.error(f'Error while retrieving zone DNS records: {repr(e)}')
