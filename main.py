@@ -73,7 +73,7 @@ def make_api_request(method: str, url: str, headers: dict=None, payload: dict=No
             # logger.warning(f'Response from "{url}" is not valid JSON. Returning raw text instead.') # True, but too noisy. Shhhh
             return response.text
     except Exception as e:
-        logger.error(f'Error while making Cloudflare API request: {repr(e)}; Request error info: {response.json()}')
+        logger.error(f'Error while making Cloudflare API request: {repr(e)}')
         raise e
 
 
