@@ -57,6 +57,8 @@ From here on, you are free to run the script manually using `./main.py`. If you 
 ```bash
 # crontab -e
 * * * * * /path/to/git/repo/venv/python /path/to/git/repo/main.py
+# If you want to capture cron logs
+* * * * * /path/to/git/repo/venv/python /path/to/git/repo/main.py >> /path/to/git/repo/cron.log 2>&1
 ```
 
 Script logs will be recorded in `<repository root>/duc.log`.
