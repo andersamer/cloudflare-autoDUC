@@ -2,19 +2,28 @@
 
 import requests, logging, sys, os
 from dotenv import dotenv_values
-from pprint import pprint
 
-# Initialize logging
-log_filename = 'duc.log'
+from logging.handlers import RotatingFileHandler
+
+# Get script directory
 root_dir = os.path.dirname(os.path.abspath(__file__))
 log_path = os.path.join(root_dir, 'duc.log')
-logging.basicConfig(
-    filename=log_path, 
-    format='%(asctime)s [%(levelname)s] - %(message)s', 
-    datefmt='%Y/%m/%d %I:%M:%S %p',
-    level=logging.INFO
-)
+
+# Ensure log file exists
+if not os.path.exists(log_path):
+    with open(log_path, 'a'):
+        os.utime(log_path, None)
+
+# Set file permissions to avoid permission issues
+os.chmod(log_path, 0o666)
+
+# Configure logging with rotation
+handler = RotatingFileHandler(log_path, maxBytes=5*1024*1024, backupCount=3)  # 5MB max, 3 backups
+handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] - %(message)s', '%Y/%m/%d %I:%M:%S %p'))
+
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+logger.addHandler(handler)
 
 logger.info(f'Loading environment variables.')
 try:
