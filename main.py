@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 logger.addHandler(handler)
 
-logger.info(f'Loading environment variables.')
+logger.debug(f'Loading environment variables.')
 try:
     # Load variables from .env file into a dictionary
     env_path = os.path.join(root_dir, '.env')
