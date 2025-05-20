@@ -133,8 +133,8 @@ def update_record(record: dict, zone_id: str, new_ip: str):
         data = make_api_request('PATCH', url, headers=cloudflare_headers(), payload=payload)
         
         if not data['success']:
-            logger.error(f'The DNS record "{record_name}" was not updated successfully: \nErrors: {data.get('errors')} \nMessages: {data.get('messages')}')
-            raise SystemExit(f'DNS record update was unsuccessful: \n\nErrors: {data.get('errors')} \n\nMessages: {data.get('messages')}')
+            logger.error(f'The DNS record "{record_name}" was not updated successfully: \nErrors: {data.get("errors")} \nMessages: {data.get("messages")}')
+            raise SystemExit(f'DNS record update was unsuccessful: \n\nErrors: {data.get("errors")} \n\nMessages: {data.get("messages")}')
         
         logger.debug(f'Successfully updated "{record_name}" to `{new_ip}`.')
         return data
