@@ -39,7 +39,7 @@ Then, deactivate the virtual environment.
 
 Before running the script, make sure to create a `.env` file in the root of the repository with the following variables:
 
-```bash
+```python
 CLOUDFLARE_API_EMAIL= # The email you use to log in to Cloudflare
 CLOUDFLARE_API_TOKEN= # This can be found under Cloudflare Dashboard > Profile > Profile > API Tokens > Create Token
 CLOUDFLARE_ZONE_ID= # This can be found under Cloudflare Dashboard > Your Domain > API > ZoneID. Remember: all DNS records under this ZoneID will be updated!
@@ -52,7 +52,7 @@ To run the script, give execution privileges to `main.py`.
 chmod +x main.py
 ```
 
-From here on, you are free to run the script manually using `./main.py`. If you want to regularly run the DUC, you can do so by pointing a cronjob at `main.py` script (make sure to the path of python executable in the venv directory here):
+From here on, you are free to run the script manually using `./main.py`. If you want to automate the DUC, you can do so by pointing a cronjob at `main.py` script (make sure to the path of python executable in the venv directory here):
 
 ```bash
 # crontab -e
